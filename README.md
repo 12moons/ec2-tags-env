@@ -12,5 +12,5 @@ Import your AWS EC2 tags as Shell environment variables.
 
 ## Usage
 
-    source ./import-tags.sh
+    . ./import-tags.sh
         
