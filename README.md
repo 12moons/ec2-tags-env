@@ -1,8 +1,8 @@
 # ec2-tags-env
 
-**WIP. This script is written for my personal usage, and may not be suitable to use in a production environment.**
+**This script is written for my personal usage, and may not be suitable to use in a production environment.**
 
-Import your AWS EC2 tags as Shell environment variables.
+Import your AWS EC2 (instance and IAM) tags as Shell environment variables.
 
 ## Requirements
 
@@ -13,4 +13,3 @@ Import your AWS EC2 tags as Shell environment variables.
 ## Usage
 
     . ./import-tags.sh
-        
