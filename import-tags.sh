@@ -1,22 +1,27 @@
 #!/bin/bash
 
+CURL_CMD=$(command -v curl)
+AWS_CMD=$(command -v aws)
+JQ_CMD=$(command -v jq)
+TR_CMD=$(command -v tr)
+
 get_instance_tags () {
-    instance_id=$(/usr/bin/curl --silent http://169.254.169.254/latest/meta-data/instance-id)
-    echo $(/usr/local/bin/aws ec2 describe-tags --filters "Name=resource-id,Values=$instance_id")
+    instance_id=$($CURL_CMD --silent http://169.254.169.254/latest/meta-data/instance-id)
+    echo $($AWS_CMD ec2 describe-tags --filters "Name=resource-id,Values=$instance_id")
 }
 
 get_ami_tags () {
-    ami_id=$(/usr/bin/curl --silent http://169.254.169.254/latest/meta-data/ami-id)
-    echo $(/usr/local/bin/aws ec2 describe-tags --filters "Name=resource-id,Values=$ami_id")
+    ami_id=$($CURL_CMD --silent http://169.254.169.254/latest/meta-data/ami-id)
+    echo $($AWS_CMD ec2 describe-tags --filters "Name=resource-id,Values=$ami_id")
 }
 
 tags_to_env () {
     tags=$1
 
-    for key in $(echo $tags | /usr/bin/jq -r ".[][].Key"); do
-        value=$(echo $tags | /usr/bin/jq -r ".[][] | select(.Key==\"$key\") | .Value")
-        key=$(echo $key | /usr/bin/tr '-' '_' | /usr/bin/tr '[:lower:]' '[:upper:]')
-        export $key="$value"
+    for key in $(echo "$tags" | $JQ_CMD -r ".[][].Key"); do
+        value=$(echo "$tags" | $JQ_CMD -r ".[][] | select(.Key==\"$key\") | .Value")
+        key=$(echo "$key" | $TR_CMD '-' '_' | $TR_CMD '[:lower:]' '[:upper:]')
+        export "$key"="$value"
     done
 }
 
