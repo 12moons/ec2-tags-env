@@ -1,12 +1,14 @@
 # ec2-tags-env
 
-**This script is written for my personal usage, and may not be suitable to use in a production environment.**
+**This was inspired by https://github.com/12moons/ec2-tags-env.**
 
-Import your AWS EC2 (instance and IAM) tags as Shell environment variables.
+Import your AWS EC2 (instance and/or IAM) tags as Shell environment variables.
 
 ## Requirements
 
-- jq package https://stedolan.github.io/jq/
+- curl
+- jq ... package https://stedolan.github.io/jq/
+- tr ... man page https://linux.die.net/man/1/tr
 - AWS CLI tool https://github.com/aws/aws-cli (probably already installed in your AMI)
 - IAM policy allowing you to use `ec2:DescribeTags`
 
